@@ -1,0 +1,31 @@
+POST http://localhost:3000/rides
+Content-Type: application/json
+
+{
+    "date": "2026-08-27",
+    "hour": "14:00:00",
+    "city": "Porto Alegre",
+    "name": "Débora",
+    "phone": "51999999999"
+}
+
+###
+
+GET http://localhost:3000/rides
+
+###
+
+PUT http://localhost:3000/rides/1
+Content-Type: application/json
+
+{
+    "date": "2026-08-28",
+    "hour": "15:30:00",
+    "city": "Canoas",
+    "name": "Débora Oliveira",
+    "phone": "51999999999"
+}
+
+###
+
+DELETE http://localhost:3000/rides/1

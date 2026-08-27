@@ -13,7 +13,6 @@ export class DatabaseMemory {
     }
 
     async create(ride) {
-        const rideId = randomUUID()
         const {
             date,
             hour,
@@ -22,7 +21,7 @@ export class DatabaseMemory {
             phone,
         } = ride
 
-        await sql`insert into ride (id, date, hour, city, name, phone) VALUES (${rideId}, ${date}, ${hour}, ${city}, , ${name}, ${phone})`
+        await sql`insert into ride (date, hour, city, name, phone) VALUES (${date}, ${hour}, ${city}, ${name}, ${phone})`
     }
 
     async update(id, ride) {
@@ -40,7 +39,7 @@ export class DatabaseMemory {
             hour = ${hour}, 
             city = ${city},
             name = ${name}, 
-            phone = ${phone}, 
+            phone = ${phone}
             where id = ${id}`
     }
 

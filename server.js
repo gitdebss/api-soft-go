@@ -62,5 +62,5 @@ server.delete('/rides/:id', async (request, reply) => {
 })
 
 server.listen({
-    port: 3333,
+    port: 3000,
 })

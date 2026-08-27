@@ -1,6 +1,8 @@
 import { sql } from './sql.js'
 
 sql`
+drop table ride;
+
 CREATE TABLE ride (
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
