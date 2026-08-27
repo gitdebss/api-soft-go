@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto"
 import { sql } from './sql.js'
 
-export class DatabaseMemory {
+export class DatabasePostgres {
 
     async list(search) {
         if (search) 

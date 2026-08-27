@@ -1,59 +1,43 @@
 import fastify from 'fastify'
-import { DatabaseMemory } from './database-postgres.js';
+import cors from '@fastify/cors'
+
+import { DatabasePostgres } from './database-postgres.js'
 
 const server = fastify()
 
-const database = new DatabaseMemory()
+// necessário pra conectar o front e o back
+await server.register(cors, {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+})
 
-server.post('/rides', async (request,reply) =>{
-    const {
-        date,
-        hour,
-        city,
-        name,
-        phone,
-    } = request.body
+const database = new DatabasePostgres()
 
-    await database.create({
-        date,
-        hour,
-        city,
-        name,
-        phone,
-    })
+server.post('/rides', async (request, reply) => {
+
+    await database.create(request.body)
 
     return reply.status(201).send('deu certo!')
 })
 
 server.get('/rides', async (request) => {
+
     const search = request.query.search
 
-    return await database.list(search);
+    return database.list(search)
 })
 
 server.put('/rides/:id', async (request, reply) => {
+
     const rideId = request.params.id
 
-    const {
-        date,
-        hour,
-        city,
-        name,
-        phone,
-    } = request.body
-
-    await database.update(rideId, {
-        date,
-        hour,
-        city,
-        name,
-        phone,
-    })
+    await database.update(rideId, request.body)
 
     return reply.status(204).send()
 })
 
 server.delete('/rides/:id', async (request, reply) => {
+
     const rideId = request.params.id
 
     await database.delete(rideId)
