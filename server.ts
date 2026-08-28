@@ -4,6 +4,7 @@ import cors from '@fastify/cors'
 import { DatabasePostgres } from './database-postgres.ts'
 import type { RequestRide } from './models/interfaceRequestRide.ts'
 import type { SearchRideQuery } from './models/interfaceSearchRide.ts'
+import { RideParams } from './models/interfaceRideParams.ts'
 
 const server = fastify()
 

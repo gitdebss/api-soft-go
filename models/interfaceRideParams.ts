@@ -1,4 +1,4 @@
 
-interface RideParams {
+export interface RideParams {
   id: number
 }
