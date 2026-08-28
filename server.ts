@@ -1,7 +1,9 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
 
-import { DatabasePostgres } from './database-postgres.js'
+import { DatabasePostgres } from './database-postgres.ts'
+import type { RequestRide } from './models/interfaceRequestRide.ts'
+import type { SearchRideQuery } from './models/interfaceSearchRide.ts'
 
 const server = fastify()
 
@@ -13,21 +15,21 @@ await server.register(cors, {
 
 const database = new DatabasePostgres()
 
-server.post('/rides', async (request, reply) => {
+server.post<{ Body: RequestRide }>('/rides', async (request, reply) => {
 
     await database.create(request.body)
 
     return reply.status(201).send('deu certo!')
 })
 
-server.get('/rides', async (request) => {
+server.get<{ Querystring: SearchRideQuery }>('/rides', async (request) => {
 
     const search = request.query.search
 
     return database.list(search)
 })
 
-server.put('/rides/:id', async (request, reply) => {
+server.put<{ Params : RideParams, Body: RequestRide }>('/rides/:id', async (request, reply) => {
 
     const rideId = request.params.id
 
@@ -36,7 +38,7 @@ server.put('/rides/:id', async (request, reply) => {
     return reply.status(204).send()
 })
 
-server.delete('/rides/:id', async (request, reply) => {
+server.delete<{ Params : RideParams}>('/rides/:id', async (request, reply) => {
 
     const rideId = request.params.id
 

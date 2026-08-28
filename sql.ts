@@ -1,10 +1,11 @@
 import 'dotenv/config'
-import http from 'http'
+import http, { IncomingMessage, ServerResponse } from 'http'
+import { env } from 'process'
 import { neon } from '@neondatabase/serverless'
 
-export const sql = neon(process.env.DATABASE_URL)
+export const sql = neon(env.DATABASE_URL!)
 
-const requestHandler = async (req, res) => {
+const requestHandler = async (req : IncomingMessage, res: ServerResponse) => {
   const result = await sql`SELECT version()`
   const { version } = result[0]
 
